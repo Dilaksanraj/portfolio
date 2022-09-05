@@ -76,10 +76,10 @@ export default function Profile() {
             {/* <button className="btn primary-btn"
               onClick={() => ScrollService.scrollHandler.scrollToHireMe()}
             > Hire Me </button> */}
-            <a href="https://cfm-list.s3.eu-west-3.amazonaws.com/Dilaksanraj-f1.pdf" download="Alexsandar_Dilaksanraj_fr.pdf">
+            <a href="https://cfm-list.s3.eu-west-3.amazonaws.com/cv/Dilaksanraj-f-v2.pdf" download="Alexsandar_Dilaksanraj_fr.pdf">
               <button className="btn highlighted-btn">Get Resume FR</button>
             </a>
-            <a href="https://cfm-list.s3.eu-west-3.amazonaws.com/Dilaksanraj-v1.pdf" download="Alexsandar_Dilaksanraj_en.pdf">
+            <a href="https://cfm-list.s3.eu-west-3.amazonaws.com/cv/Dilaksanraj-v2.pdf" download="Alexsandar_Dilaksanraj_en.pdf">
               <button className="btn highlighted-btn">Get Resume EN</button>
             </a>
           </div>
