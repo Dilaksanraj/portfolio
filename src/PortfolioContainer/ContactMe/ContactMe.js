@@ -1,15 +1,15 @@
 import React, { useState } from "react";
 import Typical from "react-typical";
-import axios from "axios";
-import { toast } from "react-toastify";
-
-import imgBack from "../../../src/images/mailz.jpeg";
 import load1 from "../../../src/images/load2.gif";
 import ScreenHeading from "../../utilities/ScreenHeading/ScreenHeading";
 import ScrollService from "../../utilities/ScrollService";
 import Animations from "../../utilities/Animations";
 import Footer from "../../PortfolioContainer/footer/Footer";
+import emailjs from '@emailjs/browser';
 import "./ContactMe.css";
+import { AppsConst } from "../../AppsConst";
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
 
 export default function ContactMe(props) {
   let fadeInScreenHandler = (screen) => {
@@ -23,7 +23,8 @@ export default function ContactMe(props) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
-  const [banner, setBanner] = useState("");
+  const [banner, setBanner] = useState(false);
+  const [error, setErr] = useState(false);
   const [bool, setBool] = useState(false);
 
   const handleName = (e) => {
@@ -35,37 +36,48 @@ export default function ContactMe(props) {
   const handleMessage = (e) => {
     setMessage(e.target.value);
   };
-  console.log(name);
   const submitForm = async (e) => {
 
-    alert("coming soon");
-    // e.preventDefault();
-    // try {
-    //   let data = {
-    //     name,
-    //     email,
-    //     message,
-    //   };
-    //   setBool(true);
-    //   const res = await axios.post(`/contact`, data);
-    //   if (name.length === 0 || email.length === 0 || message.length === 0) {
-    //     setBanner(res.data.msg);
-    //     toast.error(res.data.msg);
-    //     setBool(false);
-    //   } else if (res.status === 200) {
-    //     setBanner(res.data.msg);
-    //     toast.success(res.data.msg);
-    //     setBool(false);
+    e.preventDefault();
 
-    //     setName("");
-    //     setEmail("");
-    //     setMessage("");
-    //   }
-    // } catch (error) {
-    //   setBool(true);
-    //   console.log(error);
-      
-    // }
+    if (email === "" || name === "" | message === "") {
+      setErr(true);
+
+      setTimeout(() => {
+        setErr(false);
+      }, 3000);
+    }
+
+    else {
+
+      setBanner(true);
+      const data = {
+        name: name,
+        message: message,
+        email: email
+      }
+
+      emailjs.send("service_a36edx9", "template_86tikne", data, "TuGzIs0p5ZGibHIk0")
+        .then((result) => {
+          console.log(result.text);
+        }, (error) => {
+          console.log(error.text);
+          setBanner(false);
+        });
+
+        setName("");
+        setEmail("");
+        setMessage("");
+
+      setTimeout(() => {
+        setBanner(false);
+      }, 3000);
+
+
+    }
+
+
+
   };
 
   return (
@@ -77,27 +89,27 @@ export default function ContactMe(props) {
             <Typical loop={Infinity} steps={["Get In Touch 📧", 1000]} />
           </h2>{" "}
           <a href="https://www.facebook.com/dilaksanraj.alexsander/">
-                <i className="fa fa-facebook-square" />
-              </a>
-              <a href="https://www.linkedin.com/in/dilaksanraj-alexsandar">
-              <i className="fa fa-linkedin"></i>
-              </a>
-              <a href="https://www.instagram.com/dilaksan_raj/">
-                <i className="fa fa-instagram" />
-              </a>
-              <a href="#">
-                <i className="fa fa-youtube-square" />
-              </a>
-              <a href="#">
-                <i className="fa fa-twitter" />
-              </a>
+            <i className="fa fa-facebook-square" />
+          </a>
+          <a href="https://www.linkedin.com/in/dilaksanraj-alexsandar">
+            <i className="fa fa-linkedin"></i>
+          </a>
+          <a href="https://www.instagram.com/dilaksan_raj/">
+            <i className="fa fa-instagram" />
+          </a>
+          <a href="https://github.com/Dilaksanraj">
+            <i className="fa fa-github"></i>
+          </a>
+          <a href="https://twitter.com/dilaksan2">
+            <i className="fa fa-twitter" />
+          </a>
         </div>
         <div className="back-form">
           <div className="img-back">
             <h4>Send Your Email Here!</h4>
             <img src="https://cfm-list.s3.eu-west-3.amazonaws.com/mailz.jpeg" alt="image not found" />
           </div>
-          <form onSubmit={submitForm}>
+          <form>
             <p>{banner}</p>
             <label htmlFor="name">Name</label>
             <input type="text" onChange={handleName} value={name} />
@@ -109,7 +121,7 @@ export default function ContactMe(props) {
             <textarea type="text" onChange={handleMessage} value={message} />
 
             <div className="send-btn">
-              <button type="submit">
+              <button type="submit" onClick={submitForm}>
                 send
                 <i className="fa fa-paper-plane" />
                 {bool ? (
@@ -124,6 +136,19 @@ export default function ContactMe(props) {
           </form>
         </div>
       </div>
+
+      <Snackbar open={banner} anchorOrigin={{ vertical: 'top', horizontal: 'center' }}>
+        <Alert severity="success" sx={{ width: '100%' }}>
+          Message has been sent successfully
+        </Alert>
+      </Snackbar>
+
+      <Snackbar open={error} anchorOrigin={{ vertical: 'top', horizontal: 'center' }}>
+        <Alert severity="warning" sx={{ width: '100%' }}>
+          Please fill all the field
+        </Alert>
+      </Snackbar>
+
       <Footer />
     </div>
   );

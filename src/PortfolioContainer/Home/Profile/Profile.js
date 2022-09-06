@@ -33,15 +33,15 @@ export default function Profile() {
                 <i className="fa fa-facebook-square" />
               </a>
               <a href="https://www.linkedin.com/in/dilaksanraj-alexsandar">
-              <i className="fa fa-linkedin"></i>
+                <i className="fa fa-linkedin"></i>
               </a>
               <a href="https://www.instagram.com/dilaksan_raj/">
                 <i className="fa fa-instagram" />
               </a>
-              <a href="#">
-                <i className="fa fa-youtube-square" />
+              <a href="https://github.com/Dilaksanraj">
+                <i className="fa fa-github"></i>
               </a>
-              <a href="#">
+              <a href="https://twitter.com/dilaksan2">
                 <i className="fa fa-twitter" />
               </a>
             </div>
@@ -69,7 +69,7 @@ export default function Profile() {
             <span className="profile-role-tagline">
               BSc Business information system (Special)
             </span>
-           
+
           </div>
 
           <div className="profile-options">
